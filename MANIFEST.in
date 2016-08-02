@@ -1,0 +1,26 @@
+include *.tar
+include build_list
+recursive-include build *.gz
+recursive-include build *.py
+recursive-include build *.spec
+recursive-include dist *.egg
+recursive-include dist *.gz
+recursive-include dist *.whl
+recursive-include trash *.md
+recursive-include trash *.stackdump
+
+# added by check_manifest.py
+include *.tar
+recursive-include build *.gz
+recursive-include build *.py
+recursive-include build *.spec
+recursive-include trash *.md
+recursive-include trash *.stackdump
+
+# added by check_manifest.py
+include *.tar
+recursive-include build *.gz
+recursive-include build *.py
+recursive-include build *.spec
+recursive-include trash *.md
+recursive-include trash *.stackdump
