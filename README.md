@@ -15,13 +15,6 @@ If an arguement has spaces, use single quotes.
 jump (destination) <variation on username> : go to another server, via the jump server
 which (potential executable): find executables on the machine trash is running on
 
-Linux/Unix Specific:
-search-for-id (username): find the unix id of a user, username can be PCRE (Perl Compatible Regex)
-
-AD Commands
-get-groups (user) : get the groups a specified AD user is in
-get-members (group) : get the members of an AD group
-search-for-name (search term) : Search for an AD entry by name. Hint: Use regex ie dust* or *ust*
 
 help,? : show commands and usage
 quit, exit : leave the shell
