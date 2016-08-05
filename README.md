@@ -9,23 +9,28 @@ You can use trash to manipulate the API's for ESXi and RedHat Satelite Server.
 
 ## Usage
 
-beastietools with no arguements drops you into the shell allowing you to use tab completion:
+Trash with no arguements drops you into the shell allowing you to use tab completion:
 ```bash
-beastietools> 
-arp    extip  ls     quit   
-beastietools> extip 
-Successfully discovered 1 services:
-  Device: Netgear CG3000DCR
-    External IP address: 68.52.132.49
-beastietools> quit
+trash> esx-get-
+esx-get-datastores      esx-get-resource-pools
+esx-get-hosts           esx-get-vm-name
+esx-get-registered-vms  esx-get-vm-uuid
+trash> esx-get-registered-vms
+{'vim.VirtualMachine:2': 'freebsd-server',
+ 'vim.VirtualMachine:3': 'ubuntu',
+ 'vim.VirtualMachine:4': 'roms-api-server',
+ 'vim.VirtualMachine:1': 'phs-dev-server'}
+trash> quit
 ```
 
 You may also use arguements if you already know what you want to do or if you want to script:
 ```bash
-dusty@xor:~$ beastietools extip
-Successfully discovered 1 services:
-  Device: Netgear CG3000DCR
-    External IP address: 68.52.132.49
+dusty@xor:~$ trash esx-get-registered-vms
+{'vim.VirtualMachine:3': 'ubuntu',
+ 'vim.VirtualMachine:4': 'roms-api-server',
+ 'vim.VirtualMachine:2': 'freebsd-server',
+ 'vim.VirtualMachine:1': 'phs-dev-server'}
+
 ```
 
 ## Installation
