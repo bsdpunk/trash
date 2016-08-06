@@ -1,6 +1,0 @@
-[console_scripts]
-trash = trash.trash:cli
-
-[trash.commands]
-get-groups = trash.adnet:get_groups
-
