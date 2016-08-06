@@ -224,7 +224,8 @@ def cli():
         elif command in RHSAT:
             if key['client'] == '':
                 print("You do not have a Redhat Satellite server in your ~/.trash.sh")
-                return
+                command = ""
+                cli = ""
             else:
                 l_class = 'rhsat'
         elif command in DOMAIN:
@@ -246,8 +247,9 @@ def cli():
             key['si'] = si 
             l_class = 'vmutils'
         else:
-            l_class = ''       
-
+            l_class = ''
+        
+        
         if len(cli.split(' ')) > 0:
             if len(cli.split(' ')) ==6:
                 command,arg_one,arg_two,arg_three,arg_four,arg_five = cli.split()
@@ -348,7 +350,7 @@ def cli():
                else:
                     print("Invalid Command")
 
-
+    
 
         if valid == 0:
             print("Unrecoginized Command")
