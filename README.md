@@ -91,4 +91,15 @@ sat-list-systems (group) : list systems in a group
 sat-list-systems-hosts (group) : list hosts and roles of system in a group
 sat-list-systems-hosts-audit (group) (role) : list all sytems in a group, not in role X(1-7)
 sat-system-group-audit: list all systems, and their assigned groups
+
+LINODE Commands
+linode-servers : lists your linode servers
+linode-create (DatacenterID) (PlanID) <PaymentTerm>: create Linode
+linode-list-ip <linode_id> <IPaddress> : return JSON information about ip address and server 
+avail-datacenters : lists available centers
+avail-distributions : lists available distribution centers
+nodebal-list : get list of lode balancers    
+nodebal-config-list (id): get lode balancer specifics using id from list
+nodebal-node-list (config id): get node list of a balancer
+nodebal-create (DatacenterID): create node balancer
 ```
