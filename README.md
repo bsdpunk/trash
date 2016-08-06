@@ -4,7 +4,7 @@ It's garbage.
 
 
 ## Description
-You can use trash to manipulate the API's for ESXi and RedHat Satelite Server.
+You can use trash to manipulate the API's for ESXi, linode, and RedHat Satelite Server.
 
 
 ## Usage
@@ -107,11 +107,33 @@ nodebal-create (DatacenterID): create node balancer
 ## TODO
 Complete the APIs so they are complete. This is more of an amalgam of uncompleted projects, rather than one that's just a single entity. 
 
+
+Make it more robust, and much more clear on why a command failed (Not enough parameters, Missing Required Parameter, etc). Only alerting for actual problems.
+
+Make the commands have conistent Prefixes...IE get the linode ones all fixed up with linode prefixes
+```
+erryday I be seddin' it.
+
+$ sed -i 's/ip-list/linode-list-ip/gi' trash/trash.py 
+$ sed -i 's/ip-list/linode-list-ip/gi' trash/servers_action.py 
+
+```
+
 Provide single commands that run all the equivelant commands, ie:
 
-list
-Runs:
+>list
+>will run:
 
-esx-get-registered-vms
-linode-servers
-sat-list-systems
+>esx-get-registered-vms
+>linode-servers
+>sat-list-systems
+
+Others:
+>ip-list
+>spin up servers with same iso at same time, different services
+
+This is actually for another project that will integrate the shell:
+I want it to be possible to have a load balancing option in the shell that will spin up webheads based on traffic.
+
+
+
