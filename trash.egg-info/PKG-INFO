@@ -1,10 +1,10 @@
 Metadata-Version: 1.0
 Name: trash
-Version: 0.24
+Version: 0.25
 Summary: A shell for ESXi And RedHat Satelite Server
 Home-page: bsdpunk.blogspot.com
 Author: dusty c
-Author-email: dustycarver@gmail.com.com
+Author-email: bsdpunk@gmail.com.com
 License: BSD
 Description: UNKNOWN
 Keywords: Shell cli command

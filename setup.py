@@ -6,7 +6,7 @@ install_requires = ['pyvmomi']
 
 setup(
     name='trash',
-    version='0.24',
+    version='0.26',
     packages=['trash',],
     install_requires=install_requires,
     entry_points = { 'console_scripts': [
@@ -16,7 +16,7 @@ setup(
         ],
      },
     author = "dusty c",
-    author_email = "dustycarver@gmail.com.com",
+    author_email = "bsdpunk@gmail.com.com",
     description = "A shell for ESXi And RedHat Satelite Server",
     license = "BSD",
     keywords = "Shell cli command",

@@ -83,7 +83,7 @@ def complete(text, state):
 
 
 #os expand must be used for 
-config_file = os.path.expanduser('~/.trash')
+config_file = os.path.expanduser('~/.trash.sh')
 hist_file = os.path.expanduser('~/.trash_history')
 buff = {}
 hfile = open(hist_file, "a")
