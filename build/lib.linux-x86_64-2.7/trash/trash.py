@@ -386,7 +386,7 @@ sat-system-group-audit: list all systems, and their assigned groups
 
 
 LINODE Commands
-linode-servers : lists your linode servers
+linode-list : lists your linode servers
 linode-create (DatacenterID) (PlanID) <PaymentTerm>: create Linode
 linode-list-ip <linode_id> <IPaddress> : return JSON information about ip address and server 
 avail-datacenters : lists available centers
