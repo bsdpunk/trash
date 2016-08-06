@@ -103,3 +103,14 @@ nodebal-config-list (id): get lode balancer specifics using id from list
 nodebal-node-list (config id): get node list of a balancer
 nodebal-create (DatacenterID): create node balancer
 ```
+
+## TODO
+Complete the APIs so they are complete. This is more of an amalgam of uncompleted projects, rather than one that's just a single entity. 
+
+Provide single commands that run all the equivelant commands, ie:
+
+list
+Runs:
+esx-get-registered-vms
+linode-list
+sat-get-systems
