@@ -111,6 +111,7 @@ Provide single commands that run all the equivelant commands, ie:
 
 list
 Runs:
+
 esx-get-registered-vms
-linode-list
+linode-servers
 sat-get-systems
