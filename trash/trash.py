@@ -41,18 +41,18 @@ prompt_r = 0
 
         
 #For tab completion
-COMMANDS = sorted(['list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name', 'esx-get-datastores','get-members','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','get-groups','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
+COMMANDS = sorted(['list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
 
 #For X number of arguements
 ONE = ['list-images','list-domains', 'linode-list-ip', 'linode-list', 'avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts', 'nodebal-list', 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
-TWO = ['linode-list-ip', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create', 'linode-shutdown','domain-resource-list','esx-change-cd','esx-vm-device-info', 'esx-check-tools','esx-get-vm-uuid','broad-ad-search','esx-get-vm-name', 'get-members','sat-list-systems','jump','get-groups','which','domain-resource-list']
+TWO = ['linode-list-ip', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create', 'linode-shutdown','domain-resource-list','esx-change-cd','esx-vm-device-info', 'esx-check-tools','esx-get-vm-uuid','broad-ad-search','esx-get-vm-name','sat-list-systems','jump','which','domain-resource-list']
 THREE = ['linode-create','domain-resource-list', 'esx-change-cd']
 FOUR = ['domain-resource-create']
 FIVE = ['domain-resource-create']
 SIX = ['linode-disk-dist']
 #For what class
 RHSAT= ['sat-system-group-audit', 'sat-list-systems','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
-ADNET= ['search-for-name', 'get-members','get-groups']
+ADNET= ['search-for-name']
 HELPER = ['hidden','?','help', 'quit', 'exit','clear','ls', 'version', 'qotd']
 UCOMMANDS = ['search-for-id','which','jump']
 VMUTILS = ['esx-vm-device-info', 'esx-perf-query', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','esx-get-vm-name','esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts']
@@ -140,6 +140,8 @@ def get_sat_key(config):
         
 
         key['key']=key["client"].auth.login(username, password)
+    else:
+        key['client'] = ''
     key['jump'] = config["default"][0]["jump"]
     try:
         return(key)
@@ -220,7 +222,11 @@ def cli():
         if command in ADNET:
             l_class = 'adnet'
         elif command in RHSAT:
-            l_class = 'rhsat'
+            if key['client'] == '':
+                print("You do not have a Redhat Satellite server in your ~/.trash.sh")
+                return
+            else:
+                l_class = 'rhsat'
         elif command in DOMAIN:
             l_class = 'domain'
         elif command in SA:
@@ -509,11 +515,6 @@ if arg_count == 3:
         bye()
     if command == "jump":
         print(ucommands.jump(api_key, arguement))
-        valid = 1
-        bye()
-    if command == "get-groups":
-        api_key = get_sat_key(config)
-        print(adnet.get_groups(api_key, arguement))
         valid = 1
         bye()
     if command == "esx-check-tools":

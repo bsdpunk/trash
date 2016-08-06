@@ -11,6 +11,7 @@ dist/trash-0.25-py2.7.egg
 dist/trash-0.26-py2.7.egg
 dist/trash-0.27-py2.7.egg
 dist/trash-0.28-py2.7.egg
+dist/trash-0.29-py2.7.egg
 trash/__init__.py
 trash/domain.py
 trash/lin_utility.py

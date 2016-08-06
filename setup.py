@@ -6,7 +6,7 @@ install_requires = ['pyvmomi']
 
 setup(
     name='trash',
-    version='0.29',
+    version='0.30',
     packages=['trash',],
     install_requires=install_requires,
     entry_points = { 'console_scripts': [
