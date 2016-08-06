@@ -23,16 +23,16 @@ def which(key,program):
 #    return None
 #
 #
-#def os_platform():
-#    fname="c:/Windows/system32/winver.exe"
-#    fname_two="/usr/bin/uname"
-#    if os.path.isfile(fname):
-#        oper_sys="windows"
-#    if os.path.isfile(fname_two):
-#        oper_sys="nix"
-#    else:
-#        oper_sys="nix"    
-#    return oper_sys
+def os_platform():
+    fname="c:/Windows/system32/winver.exe"
+    fname_two="/usr/bin/uname"
+    if os.path.isfile(fname):
+        oper_sys="windows"
+    if os.path.isfile(fname_two):
+        oper_sys="nix"
+    else:
+        oper_sys="nix"    
+    return oper_sys
 #
 #
 #
