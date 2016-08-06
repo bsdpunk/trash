@@ -26,7 +26,10 @@ import random, shlex, atexit
 import platform, time, calendar
 import vmutils
 import pyVim, pyVmomi
+#linosh libraries
+import servers_action, domain, lin_utility, node_balance 
 from pyVim.connect import SmartConnect, Disconnect
+
 
 arg_count = 0
 no_auth = 0
@@ -38,12 +41,12 @@ prompt_r = 0
 
         
 #For tab completion
-COMMANDS = sorted(['esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name','search-for-id','search-for-name', 'esx-get-datastores','get-members','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','get-groups','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
+COMMANDS = sorted(['list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name','search-for-id','search-for-name', 'esx-get-datastores','get-members','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','get-groups','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
 
 #For X number of arguements
-ONE = [ 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
-TWO = ['esx-change-cd','esx-vm-device-info', 'esx-check-tools','esx-get-vm-uuid','broad-ad-search','esx-get-vm-name','search-for-id','search-for-name', 'get-members','sat-list-systems','jump','get-groups','which','domain-resource-list']
-THREE = [ 'esx-change-cd','domain-resource-list']
+ONE = ['list-images','list-domains', 'linode-list-ip', 'linode-list', 'avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts', 'nodebal-list', 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
+TWO = ['linode-list-ip', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create', 'linode-shutdown','domain-resource-list','esx-change-cd','esx-vm-device-info', 'esx-check-tools','esx-get-vm-uuid','broad-ad-search','esx-get-vm-name','search-for-id','search-for-name', 'get-members','sat-list-systems','jump','get-groups','which','domain-resource-list']
+THREE = ['linode-create','domain-resource-list', 'esx-change-cd']
 FOUR = ['domain-resource-create']
 FIVE = ['domain-resource-create']
 SIX = ['linode-disk-dist']
@@ -53,6 +56,10 @@ ADNET= ['broad-ad-search','search-for-name', 'get-members','get-groups']
 HELPER = ['hidden','?','help', 'quit', 'exit','clear','ls', 'version', 'qotd']
 UCOMMANDS = ['search-for-id','which','jump']
 VMUTILS = ['esx-vm-device-info', 'esx-perf-query', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','esx-get-vm-name','esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts']
+DOMAIN= ['domain-resource-create','list-domains','domain-resource-list']
+SA = ['list-images','linode-list','linode-list-ip','linode-create', 'linode-shutdown','linode-disk-dist']
+LU = ['avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts']
+NB = ['nodebal-list', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create']
 
 for arg in sys.argv:
     arg_count += 1
@@ -89,9 +96,10 @@ else:
     vcenter = raw_input("VCenter Server (ex: company.local):")
     sat_url =raw_input("Satellite Server Url (ex: https://redhat/rhn/rpc/api):")
     jump =raw_input("Jump Server(IP or DNS):")
+    linode_api_key = getpass.getpass("Linode-API-Key:")
+ 
 
-
-    config= {"default":[{"username":username,"password":password,'vcenter':vcenter,"sat_url":sat_url,"jump":jump}]}
+    config= {"default":[{"username":username,"password":password,'vcenter':vcenter,"sat_url":sat_url,"jump":jump,"Linode-API-Key":api_key}]}
     
     config_file_new = open(config_file, "w")
     config_f = str(config)
@@ -114,12 +122,14 @@ def get_sat_key(config):
     password = config["default"][0]["password"]
     sat_url = config["default"][0]["sat_url"]
     vcenter = config["default"][0]["vcenter"]
+    lkey = config["default"][0]["Linode-API-Key"]
     key={}
     key['username']=username
     key['password']=password
     #key['platform']=ucommands.os_platform()
     key['vcenter']=vcenter
     key['si']=None
+    key['Linode-API-Key']=lkey
     if sat_url:
 
         if platform.python_version() == '2.6.6':
@@ -210,6 +220,14 @@ def cli():
             l_class = 'adnet'
         elif command in RHSAT:
             l_class = 'rhsat'
+        elif command in DOMAIN:
+            l_class = 'domain'
+        elif command in SA:
+            l_class = 'servers_action'
+        elif command in LU:
+            l_class = 'lin_utility'
+        elif command in NB:
+            l_class = 'node_balance'
         elif command in UCOMMANDS:
             l_class = 'ucommands'
         elif command in VMUTILS:
@@ -340,14 +358,6 @@ If an arguement has spaces, use single quotes.
 jump (destination) <variation on username> : go to another server, via the jump server
 which (potential executable): find executables on the machine trash is running on
 
-Linux/Unix Specific:
-search-for-id (username): find the unix id of a user, username can be PCRE (Perl Compatible Regex)
-
-AD Commands
-get-groups (user) : get the groups a specified AD user is in
-get-members (group) : get the members of an AD group
-search-for-name (search term) : Search for an AD entry by name. Hint: Use regex ie dust* or *ust*
-
 help,? : show commands and usage
 quit, exit : leave the shell
 clear : clear screen
@@ -372,6 +382,18 @@ sat-system-version : satellite system version
 sat-list-all-groups: list all available groups
 sat-list-systems (group) : list systems in a group
 sat-system-group-audit: list all systems, and their assigned groups
+
+
+LINODE Commands
+linode-servers : lists your linode servers
+linode-create (DatacenterID) (PlanID) <PaymentTerm>: create Linode
+linode-list-ip <linode_id> <IPaddress> : return JSON information about ip address and server 
+avail-datacenters : lists available centers
+avail-distributions : lists available distribution centers
+nodebal-list : get list of lode balancers    
+nodebal-config-list (id): get lode balancer specifics using id from list
+nodebal-node-list (config id): get node list of a balancer
+nodebal-create (DatacenterID): create node balancer
 
 """
     return(help_var)
