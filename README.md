@@ -114,4 +114,4 @@ Runs:
 
 esx-get-registered-vms
 linode-servers
-sat-get-systems
+sat-list-systems
