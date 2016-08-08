@@ -49,7 +49,7 @@ def jump(key, jump_to, optional_user=''):
     output.append("\n"+'match_max 100000'+"\n")
 
     output.append('expect {'+"\n")
-    output.append('\t-re {t1rgjmp701} {'+"\n")
+    output.append('\t-re {} {'+"\n")
     output.append('\t\tsleep .1'+"\n")
 
 
