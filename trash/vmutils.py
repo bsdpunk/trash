@@ -7,13 +7,62 @@ import atexit
 import argparse
 import datetime
 import json
-from os import system, path
+from os import system, path, unlink
 from sys import exit
 from threading import Thread
 from time import sleep
 
 from pyVim import connect
 from pyVmomi import vim
+import tarfile
+import os.path
+import shutil
+
+def wait_for_tasks(service_instance, tasks):
+    """Given the service instance si and tasks, it returns after all the
+   tasks are complete
+   """
+    property_collector = service_instance.content.propertyCollector
+    task_list = [str(task) for task in tasks]
+    # Create filter
+    obj_specs = [vmodl.query.PropertyCollector.ObjectSpec(obj=task)
+                 for task in tasks]
+    property_spec = vmodl.query.PropertyCollector.PropertySpec(type=vim.Task,
+                                                               pathSet=[],
+                                                               all=True)
+    filter_spec = vmodl.query.PropertyCollector.FilterSpec()
+    filter_spec.objectSet = obj_specs
+    filter_spec.propSet = [property_spec]
+    pcfilter = property_collector.CreateFilter(filter_spec, True)
+    try:
+        version, state = None, None
+        # Loop looking for updates till the state moves to a completed state.
+        while len(task_list):
+            update = property_collector.WaitForUpdates(version)
+            for filter_set in update.filterSet:
+                for obj_set in filter_set.objectSet:
+                    task = obj_set.obj
+                    for change in obj_set.changeSet:
+                        if change.name == 'info':
+                            state = change.val.state
+                        elif change.name == 'info.state':
+                            state = change.val
+                        else:
+                            continue
+
+                        if not str(task) in task_list:
+                            continue
+
+                        if state == vim.TaskInfo.State.success:
+                            # Remove task from taskList
+                            task_list.remove(str(task))
+                        elif state == vim.TaskInfo.State.error:
+                            raise task.info.error
+            # Move to next version
+            version = update.version
+    finally:
+        if pcfilter:
+            pcfilter.Destroy()
 
 
 
@@ -265,7 +314,6 @@ def esx_list_datastores(key, si):
                                                           [vim.HostSystem],
                                                         True)
     args =get_args(key)
-    print(args) 
     esxi_hosts = objview.view
     objview.Destroy()
 
@@ -706,4 +754,47 @@ def esx_create_from_ovf(key, si, ofl, vfl):
             print "Lease error: " + lease.state.error
             exit(1)
     connect.Disconnect(si)
+    if os.path.isdir('vm_ova'):
+        print('is')
+        shutil.rmtree('vm_ova')
 
+
+def esx_create_from_ova(key, si):
+    #extractTarPath =
+    extractTarPath = 'vm_ova'
+    if os.path.isfile(key['vmarg']):
+        tfile = tarfile.open(key['vmarg'])
+        #print tfile.list(verbose=False)
+        tfile.extractall(extractTarPath)
+        for tarinfo in tfile:
+            #print(os.path.splitext(tarinfo.name))
+            if os.path.splitext(tarinfo.name)[1] == '.ovf':
+                ofl = "vm_ova/"+tarinfo.name
+                #print("1")
+            if os.path.splitext(tarinfo.name)[1] == '.vmdk':
+                vfl = "vm_ova/"+tarinfo.name
+
+                #print("1")
+        if 'ofl' in locals() and 'vfl' in locals():
+            esx_create_from_ovf(key, si, ofl, vfl)
+        else:
+            return "Incomplete OVA"
+            
+def esx_destroy_vm(key, si):
+        
+    VM = si.content.searchIndex.FindByUuid(None, key['vmarg'],
+                                           True,
+                                           False)
+
+  
+    print(VM) 
+    print("Found: {0}".format(VM.name))
+    print("The current powerState is: {0}".format(VM.runtime.powerState))
+    print("Attempting to power off {0}".format(VM.name))
+    TASK = VM.PowerOffVM_Task()
+    wait_for_tasks(si, [TASK])
+    print("{0}".format(TASK.info.state))
+    print("Destroying VM from vSphere.")
+    TASK = VM.Destroy_Task()
+    wait_for_tasks(si, [TASK])
+    print("Done.")

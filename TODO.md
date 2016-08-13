@@ -12,3 +12,5 @@
 * Add Change domain and load balance for Linode to include Linode Prefix
 * Get Perf working and usable
 * expand QOTD
+* Lookup UUID's to prevent crashing when wrong is entered
+* When destroying, check power before assuming
