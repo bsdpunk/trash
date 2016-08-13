@@ -390,7 +390,7 @@ esx-list-datastores: List all datastores
 esx-change-cd (vm-name) <iso>: change the iso of the vm, blank for blank
 esx-create-from-ova (ova path): Create a VM from an OVA
 esx-create-from-ovf (ovf path) (vmdk path): Create a VM from an OVF
-
+esx-destroy-vm (bios-uuid): Destroy powered on VM
 
 
 REDHAT SATELLITE API Commands
