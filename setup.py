@@ -6,7 +6,7 @@ install_requires = ['pyvmomi','pyvim']
 
 setup(
     name='trash',
-    version='0.40',
+    version='0.41',
     packages=['trash',],
     install_requires=install_requires,
     entry_points = { 'console_scripts': [

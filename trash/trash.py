@@ -27,7 +27,7 @@ import platform, time, calendar
 import vmutils
 import pyVim, pyVmomi
 #linosh libraries
-import oneshot
+#import oneshot
 import servers_action, domain, lin_utility, node_balance 
 from pyVim.connect import SmartConnect, Disconnect
 
@@ -388,6 +388,9 @@ esx-check-tools (vm-name): check vm ware tools on vm
 esx-get-vm-uuid (ip-of-vm): get uuid of vm
 esx-list-datastores: List all datastores
 esx-change-cd (vm-name) <iso>: change the iso of the vm, blank for blank
+esx-create-from-ovf (ovf path) (vmdk path): Create a VM from an OVF
+
+
 
 REDHAT SATELLITE API Commands
 sat-list-users : lists satellite users
