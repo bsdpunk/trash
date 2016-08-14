@@ -6,7 +6,7 @@ install_requires = ['pyvmomi','pyvim']
 
 setup(
     name='trash',
-    version='0.41',
+    version='0.42',
     packages=['trash',],
     install_requires=install_requires,
     entry_points = { 'console_scripts': [
@@ -15,10 +15,10 @@ setup(
             "get-groups = trash.adnet:get_groups",
         ],
      },
-    author = "dusty c",
+    author = "Dusty C",
     author_email = "bsdpunk@gmail.com.com",
     description = "A shell for linode, ESXi, And RedHat Satelite Server",
     license = "BSD",
-    keywords = "Shell cli command",
+    keywords = "Shell cli command virtualization management",
     url = 'bsdpunk.blogspot.com'   
     )

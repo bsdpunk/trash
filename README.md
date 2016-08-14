@@ -80,6 +80,9 @@ esx-check-tools (vm-name): check vm ware tools on vm
 esx-get-vm-uuid (ip-of-vm): get uuid of vm
 esx-list-datastores: List all datastores
 esx-change-cd (vm-name) <iso>: change the iso of the vm, blank for blank
+esx-create-from-ova (ova path): Create a VM from an OVA
+esx-create-from-ovf (ovf path) (vmdk path): Create a VM from an OV
+esx-destroy-vm (bios uuid): destroy powered on vm
 
 REDHAT SATELLITE API Commands
 sat-list-users : lists satellite users
@@ -115,7 +118,7 @@ Make the commands have conistent Prefixes...IE get the linode ones all fixed up 
 erryday I be seddin' it.
 
 $ sed -i 's/ip-list/linode-list-ip/gi' trash/trash.py 
-$ sed -i 's/ip-list/linode-list-ip/gi' trash/servers_action.py 
+$ sed -i 's/ip_list/linode_list_ip/gi' trash/servers_action.py 
 
 ```
 

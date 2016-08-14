@@ -371,7 +371,7 @@ def esx_list_datastores(key, si):
     if args.json:
         print(json.dumps(datastores))
 
-    return 0
+    return
 
 
 def get_args(key):
