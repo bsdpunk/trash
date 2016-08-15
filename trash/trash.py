@@ -284,6 +284,7 @@ def cli():
                 if command in THREE:
                     command = command.replace("-", "_")
                     if l_class == 'vmutils':
+                        api_key['vmarg'] = arg_one
                         l_class = eval(l_class)
                         result = getattr(l_class, command)(api_key, si, arg_one, arg_two)
                     else:
@@ -424,7 +425,6 @@ def hidden_menu():
 
 Commands that have not quite reached maturity. Or otherwise don't make the cut.
 
-broad-ad-search (search term): A search that does a very broad Active Directory search, hint asterisks are your friends
 ls: random insult return
 qotd: random quote of the day
 """

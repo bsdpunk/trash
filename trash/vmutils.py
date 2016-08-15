@@ -170,7 +170,7 @@ def esx_check_tools(key, si):
  #           virtual_cdrom_device = dev
 
 
-def esx_change_cd(key, si, full_path_to_iso=None, cdrom_number=1):
+def esx_change_cd(key, si, vm_name=None, full_path_to_iso=None, cdrom_number=1):
     """ Updates Virtual Machine CD/DVD backend device
     :param vm_obj: virtual machine object vim.VirtualMachine
     :param cdrom_number: CD/DVD drive unit number
@@ -178,6 +178,7 @@ def esx_change_cd(key, si, full_path_to_iso=None, cdrom_number=1):
     :param full_path_to_iso: Full path to iso
     :return: True or false in case of success or error
     """
+    #key['vmarg'] = vm_name
     vm_obj = esx_get_vm_name(key, si)
     cdrom_prefix_label = 'CD/DVD drive '
     cdrom_label = cdrom_prefix_label + str(cdrom_number)

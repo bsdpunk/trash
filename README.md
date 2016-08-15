@@ -137,6 +137,3 @@ Others:
 
 This is actually for another project that will integrate the shell:
 I want it to be possible to have a load balancing option in the shell that will spin up webheads based on traffic.
-
-
-
