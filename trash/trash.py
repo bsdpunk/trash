@@ -30,7 +30,7 @@ import pyVim, pyVmomi
 #import oneshot
 import servers_action, domain, lin_utility, node_balance 
 from pyVim.connect import SmartConnect, Disconnect
-
+import dock_containers
 
 arg_count = 0
 no_auth = 0
@@ -42,10 +42,10 @@ prompt_r = 0
 
         
 #For tab completion
-COMMANDS = sorted(['esx-destroy-vm','esx-create-from-ova','esx-create-from-ovf','list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
+COMMANDS = sorted(['dock-containers','esx-destroy-vm','esx-create-from-ova','esx-create-from-ovf','list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
 
 #For X number of arguements
-ONE = ['list-images','list-domains', 'linode-list-ip', 'linode-list', 'avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts', 'nodebal-list', 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
+ONE = ['dock-containers','list-images','list-domains', 'linode-list-ip', 'linode-list', 'avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts', 'nodebal-list', 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
 TWO = ['esx-destroy-vm','esx-create-from-ova','linode-list-ip', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create', 'linode-shutdown','domain-resource-list','esx-change-cd','esx-vm-device-info', 'esx-check-tools','esx-get-vm-uuid','broad-ad-search','esx-get-vm-name','sat-list-systems','jump','which','domain-resource-list']
 THREE = ['esx-create-from-ovf','linode-create','domain-resource-list', 'esx-change-cd']
 FOUR = ['domain-resource-create']
@@ -61,7 +61,7 @@ DOMAIN= ['domain-resource-create','list-domains','domain-resource-list']
 SA = ['list-images','linode-list','linode-list-ip','linode-create', 'linode-shutdown','linode-disk-dist']
 LU = ['avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts']
 NB = ['nodebal-list', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create']
-
+CONTAINERS = ['dock-containers']
 for arg in sys.argv:
     arg_count += 1
 
@@ -97,10 +97,11 @@ else:
     vcenter = raw_input("VCenter Server (ex: company.local):")
     sat_url =raw_input("Satellite Server Url (ex: https://redhat/rhn/rpc/api):")
     jump =raw_input("Jump Server(IP or DNS):")
+    docker_ip =raw_input("Docker Remote API IP:")
     linode_api_key = getpass.getpass("Linode-API-Key:")
     api_key = linode_api_key 
 
-    config= {"default":[{"username":username,"password":password,'vcenter':vcenter,"sat_url":sat_url,"jump":jump,"Linode-API-Key":api_key}]}
+    config= {"default":[{"username":username,"password":password,'vcenter':vcenter,"sat_url":sat_url,"jump":jump,"Linode-API-Key":api_key, "docker-ip":docker_ip}]}
     
     config_file_new = open(config_file, "w")
     config_f = str(config)
@@ -122,6 +123,7 @@ def get_sat_key(config):
     username = config["default"][0]["username"]
     password = config["default"][0]["password"]
     sat_url = config["default"][0]["sat_url"]
+    docker_ip = config["default"][0]["docker-ip"]
     vcenter = config["default"][0]["vcenter"]
     lkey = config["default"][0]["Linode-API-Key"]
     api_key = config["default"][0]["Linode-API-Key"]
@@ -132,6 +134,7 @@ def get_sat_key(config):
     key['vcenter']=vcenter
     key['si']=None
     key['Linode-API-Key']=lkey
+    key['docker-ip']=docker_ip
     if sat_url:
 
         if platform.python_version() == '2.6.6':
@@ -231,6 +234,8 @@ def cli():
                 l_class = 'rhsat'
         elif command in DOMAIN:
             l_class = 'domain'
+        elif command in CONTAINERS:
+            l_class = 'dock_containers'
         elif command in SA:
             l_class = 'servers_action'
         elif command in LU:

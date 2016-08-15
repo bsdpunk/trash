@@ -2,7 +2,7 @@
 from setuptools import setup, find_packages
 
 #dependecy_links = ["git+https://github.com/pexpect/pexpect.git#egg=pexpect-0.1"]
-install_requires = ['pyvmomi','pyvim']
+install_requires = ['pyvmomi','pyvim','docker-py']
 
 setup(
     name='trash',
