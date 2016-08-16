@@ -105,6 +105,10 @@ nodebal-list : get list of lode balancers
 nodebal-config-list (id): get lode balancer specifics using id from list
 nodebal-node-list (config id): get node list of a balancer
 nodebal-create (DatacenterID): create node balancer
+
+
+DOCKER commands
+dock-containers: show docker containers
 ```
 
 ## TODO
