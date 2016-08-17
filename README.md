@@ -52,6 +52,12 @@ pip install pyVmomi --user
 python setup.py --user install
 ```
 
+Or pip:
+```
+sudo pip install trash-shell
+```
+
+
 ## Some things you can do with Trash
 ```bash
 trash> help
