@@ -17,5 +17,5 @@ setup(
     description = "A shell for linode, docker, ESXi, And RedHat Satelite Server",
     license = "BSD",
     keywords = "Shell cli command virtualization management",
-    url = 'http://bsdpunk.blogspot.com'   
+    url = 'http://github.com/trash' 
     )
