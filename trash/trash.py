@@ -456,7 +456,7 @@ def qotd_menu():
 
 
 def version():
-    version = pkg_resources.require("trash")[0].version
+    version = pkg_resources.require("trash-shell")[0].version
     return version
 
 def bye():

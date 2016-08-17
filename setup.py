@@ -5,20 +5,17 @@ from setuptools import setup, find_packages
 install_requires = ['pyvmomi','pyvim','docker-py']
 
 setup(
-    name='trash',
-    version='0.42',
+    name='trash-shell',
+    version='0.44',
     packages=['trash',],
     install_requires=install_requires,
     entry_points = { 'console_scripts': [
         'trash = trash.trash:cli', ],
-        "trash.commands": [
-            "get-groups = trash.adnet:get_groups",
-        ],
      },
     author = "Dusty C",
     author_email = "bsdpunk@gmail.com.com",
-    description = "A shell for linode, ESXi, And RedHat Satelite Server",
+    description = "A shell for linode, docker, ESXi, And RedHat Satelite Server",
     license = "BSD",
     keywords = "Shell cli command virtualization management",
-    url = 'bsdpunk.blogspot.com'   
+    url = 'http://bsdpunk.blogspot.com'   
     )
