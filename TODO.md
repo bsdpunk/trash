@@ -14,3 +14,4 @@
 * expand QOTD
 * Lookup UUID's to prevent crashing when wrong is entered
 * When destroying, check power before assuming
+* Make the commands more like overcast
