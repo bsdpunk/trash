@@ -451,8 +451,11 @@ def ls_menu():
 def qotd_menu():
     qotd_messages=[]
     qotd_messages.append("Don't let the Best, be the enemy of the Good.")
-    #rando = random.randrange(0,3)
-    return qotd_messages[0]
+    qotd_messages.append("Always read JWZ's Blog, Always")
+    qotd_messages.append("Use Vim. Do not stray the course")
+    qotd_messages.append("Eliminate Tabs")
+    rando = random.randrange(0,4)
+    return qotd_messages[rando]
 
 
 def version():
