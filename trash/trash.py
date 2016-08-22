@@ -42,10 +42,10 @@ prompt_r = 0
 
         
 #For tab completion
-COMMANDS = sorted(['dock-containers','esx-destroy-vm','esx-create-from-ova','esx-create-from-ovf','list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
+COMMANDS = sorted(['dock-events','dock-containers','esx-destroy-vm','esx-create-from-ova','esx-create-from-ovf','list-images','linode-disk-dist','domain-resource-list','domain-resource-create','list-domains','linode-shutdown', 'avail-stackscripts','avail-plans','linode-create','nodebal-create', 'nodebal-config-list','nodebal-node-list','nodebal-list', 'linode-list','linode-list-ip', 'avail-datacenters', 'avail-distributions','esx-vm-device-info', 'esx-list-datastores',  'esx-check-tools', 'esx-change-cd','esx-get-vm-uuid','sat-system-group-audit', 'esx-get-vm-name', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-systems','sat-list-all-groups','jump','which','sat-system-version','sat-get-version','sat-get-api-call','sat-list-users','help','?','exit','clear','quit','version'])
 
 #For X number of arguements
-ONE = ['dock-containers','list-images','list-domains', 'linode-list-ip', 'linode-list', 'avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts', 'nodebal-list', 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
+ONE = ['dock-events','dock-containers','list-images','list-domains', 'linode-list-ip', 'linode-list', 'avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts', 'nodebal-list', 'esx-list-datastores',  'sat-system-group-audit', 'esx-get-datastores','esx-get-resource-pools','esx-get-registered-vms','esx-get-hosts','sat-list-all-groups','sat-system-version','sat-list-users','sat-get-api-call','sat-get-version']
 TWO = ['esx-destroy-vm','esx-create-from-ova','linode-list-ip', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create', 'linode-shutdown','domain-resource-list','esx-change-cd','esx-vm-device-info', 'esx-check-tools','esx-get-vm-uuid','broad-ad-search','esx-get-vm-name','sat-list-systems','jump','which','domain-resource-list']
 THREE = ['esx-create-from-ovf','linode-create','domain-resource-list', 'esx-change-cd']
 FOUR = ['domain-resource-create']
@@ -61,7 +61,7 @@ DOMAIN= ['domain-resource-create','list-domains','domain-resource-list']
 SA = ['list-images','linode-list','linode-list-ip','linode-create', 'linode-shutdown','linode-disk-dist']
 LU = ['avail-datacenters', 'avail-distributions', 'avail-plans', 'avail-stackscripts']
 NB = ['nodebal-list', 'nodebal-node-list', 'nodebal-config-list', 'nodebal-create']
-CONTAINERS = ['dock-containers']
+CONTAINERS = ['dock-events','dock-containers']
 for arg in sys.argv:
     arg_count += 1
 
