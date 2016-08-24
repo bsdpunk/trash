@@ -6,7 +6,7 @@ install_requires = ['pyvmomi','pyvim','docker-py']
 
 setup(
     name='trash-shell',
-    version='0.44',
+    version='0.45',
     packages=['trash',],
     install_requires=install_requires,
     entry_points = { 'console_scripts': [

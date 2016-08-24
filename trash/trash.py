@@ -95,13 +95,14 @@ else:
     username = raw_input("Username:")
     password = getpass.getpass("Password:")
     vcenter = raw_input("VCenter Server (ex: company.local):")
+    ssh_pub = raw_input("ssh-pub:")
     sat_url =raw_input("Satellite Server Url (ex: https://redhat/rhn/rpc/api):")
     jump =raw_input("Jump Server(IP or DNS):")
     docker_ip =raw_input("Docker Remote API IP:")
     linode_api_key = getpass.getpass("Linode-API-Key:")
     api_key = linode_api_key 
 
-    config= {"default":[{"username":username,"password":password,'vcenter':vcenter,"sat_url":sat_url,"jump":jump,"Linode-API-Key":api_key, "docker-ip":docker_ip}]}
+    config= {"default":[{"username":username,"password":password,'vcenter':vcenter,"sat_url":sat_url,"jump":jump,"Linode-API-Key":api_key, "docker-ip":docker_ip, "ssh-pub":ssh_pub}]}
     
     config_file_new = open(config_file, "w")
     config_f = str(config)
@@ -125,11 +126,13 @@ def get_sat_key(config):
     sat_url = config["default"][0]["sat_url"]
     docker_ip = config["default"][0]["docker-ip"]
     vcenter = config["default"][0]["vcenter"]
+    ssh_pub = config["default"][0]["ssh-pub"]
     lkey = config["default"][0]["Linode-API-Key"]
     api_key = config["default"][0]["Linode-API-Key"]
     key={}
     key['username']=username
     key['password']=password
+    key['ssh-pub']=ssh_pub
     #key['platform']=ucommands.os_platform()
     key['vcenter']=vcenter
     key['si']=None
