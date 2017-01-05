@@ -2,6 +2,8 @@
 Trash is a shell I made that does esxi, and redhat stuff.
 It's garbage.
 
+![Animated Example](trash.gif)
+
 
 ## Description
 You can use trash to manipulate the API's for ESXi, linode, and RedHat Satelite Server.
