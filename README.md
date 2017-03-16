@@ -10,7 +10,6 @@ You can use trash to manipulate the API's for ESXi, linode, and RedHat Satelite 
 
 
 ## Usage
-
 Trash with no arguements drops you into the shell allowing you to use tab completion:
 ```bash
 trash> esx-get-
@@ -106,7 +105,7 @@ sat-system-group-audit: list all systems, and their assigned groups
 LINODE Commands
 linode-list : lists your linode servers
 linode-create (DatacenterID) (PlanID) <PaymentTerm>: create Linode
-linode-list-ip <linode_id> <IPaddress> : return JSON information about ip address and server 
+linode-list-ip <linode_id> <IPaddress> : return JSON information about ip address and server
 avail-datacenters : lists available centers
 avail-distributions : lists available distribution centers
 nodebal-list : get list of lode balancers    
@@ -120,7 +119,7 @@ dock-containers: show docker containers
 ```
 
 ## TODO
-Complete the APIs so they are complete. This is more of an amalgam of uncompleted projects, rather than one that's just a single entity. 
+Complete the APIs so they are complete. This is more of an amalgam of uncompleted projects, rather than one that's just a single entity.
 
 
 Make it more robust, and much more clear on why a command failed (Not enough parameters, Missing Required Parameter, etc). Only alerting for actual problems.
@@ -129,8 +128,8 @@ Make the commands have conistent Prefixes...IE get the linode ones all fixed up 
 ```
 erryday I be seddin' it.
 
-$ sed -i 's/ip-list/linode-list-ip/gi' trash/trash.py 
-$ sed -i 's/ip_list/linode_list_ip/gi' trash/servers_action.py 
+$ sed -i 's/ip-list/linode-list-ip/gi' trash/trash.py
+$ sed -i 's/ip_list/linode_list_ip/gi' trash/servers_action.py
 
 ```
 
